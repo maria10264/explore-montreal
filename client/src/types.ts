@@ -1,4 +1,5 @@
-export interface Place {
+latitude: number;
+longitude: number;export interface Place {
     title: string;
     first_date: string;
     dates: string;
@@ -7,4 +8,6 @@ export interface Place {
     public: string;
     cost: string;
     description: string;
-  }
+    latitude: number;
+    longitude: number;
+}
