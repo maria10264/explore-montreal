@@ -36,7 +36,8 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/maria10264/explore-montreal.git
-cd explore-montreal```
+cd explore-montreal
+```
 
 
 Running the Backend
