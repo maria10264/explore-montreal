@@ -36,7 +36,7 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/maria10264/explore-montreal.git
-cd explore-montreal
+cd explore-montreal```
 
 
 Running the Backend
@@ -59,19 +59,16 @@ Frontend runs on:
 http://localhost:5173
 
 
-##About
-
-
-### Application Workflow
+## Application Workflow
 
 - The Express backend provides Montreal event data through API endpoints.
 - The React frontend retrieves data from the backend.
 - Users can search, filter, sort, and explore events.
 - Events are displayed through interactive cards and an interactive Montreal map.
 
-----------------------------------------------------------------------
 
-### Skills Demonstrated
+
+## Skills Demonstrated
 
 - Building a full-stack web application using React and Express
 - Developing REST API communication between frontend and backend
@@ -80,6 +77,6 @@ http://localhost:5173
 - Implementing interactive maps with React Leaflet
 
 
-### Author 
+## Author 
 
 Maria G.
