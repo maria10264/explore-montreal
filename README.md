@@ -58,6 +58,7 @@ npm run dev
 Frontend runs on:
 http://localhost:5173
 
+---
 
 ## Application Workflow
 
@@ -66,6 +67,7 @@ http://localhost:5173
 - Users can search, filter, sort, and explore events.
 - Events are displayed through interactive cards and an interactive Montreal map.
 
+---
 
 
 ## Skills Demonstrated
@@ -76,7 +78,10 @@ http://localhost:5173
 - Creating reusable React components
 - Implementing interactive maps with React Leaflet
 
+---
 
 ## Author 
 
 Maria G.
+
+---
