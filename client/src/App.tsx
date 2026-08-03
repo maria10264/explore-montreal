@@ -1,3 +1,4 @@
+import Highlights from "./components/Highlights";
 import { useEffect, useState, useMemo } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
@@ -91,9 +92,15 @@ function App() {
             {filteredPlaces.length} of {places.length} events
           </p>
 
-          <div className="map-container">
-            <Map places={filteredPlaces} />
-          </div>
+          <div className="explore-layout">
+
+  <div className="map-container">
+    <Map places={filteredPlaces} />
+  </div>
+
+  <Highlights />
+
+</div>
 
           <PlaceList
             places={filteredPlaces.slice(0, 50)}
