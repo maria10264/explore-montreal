@@ -59,7 +59,8 @@ Frontend runs on:
 http://localhost:5173
 
 
------------------------------------------------------------------------
+##About
+
 
 ### Application Workflow
 
@@ -79,3 +80,6 @@ http://localhost:5173
 - Implementing interactive maps with React Leaflet
 
 
+### Author 
+
+Maria G.
