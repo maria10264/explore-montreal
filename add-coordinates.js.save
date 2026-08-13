@@ -1,0 +1,62 @@
+const fs = require('fs');
+
+const coords = {
+  "Ville-Marie": [45.5017, -73.5673],
+  "Côte-des-Neiges–Notre-Dame-de-Grâce": [45.4972, -73.6237],
+  "Ville de Montréal": [45.5088, -73.5878],
+  "Lachine": [45.4342, -73.6692],
+  "Rosemont–La Petite-Patrie": [45.5517, -73.5878],
+  "Mercier–Hochelaga-Maisonneuve": [45.5567, -73.5378],
+  "Villeray–Saint-Michel–Parc-Extension": [45.5486, -73.6144],
+  "Saint-Laurent": [45.5089, -73.6800],
+  "Outremont": [45.5185, -73.6103],
+  "LaSalle": [45.4325, -73.6270],
+  "Rivière-des-Prairies–Pointe-aux-Trembles": [45.6547, -73.5147],
+  "Le Plateau-Mont-Royal": [45.5234, -73.5794],
+  "Saint-Léonard": [45.5889, -73.5989],
+  "Pierrefonds-Roxboro": [45.4939, -73.8383],
+  "Montréal-Nord": [45.5900, -73.6300],
+  "Le Sud-Ouest": [45.4750, -73.5890],
+  "L'Île-Bizard–Sainte-Geneviève": [45.5044, -73.8797],
+  "Quartier des spectacles": [45.5089, -73.5670],
+  "Le 9e (Centre Eaton)": [45.5037, -73.5697],
+  "Vieux-Port de Montréal, Quai Jacques-Cartier": [45.5074, -73.5527],
+  "Restaurants participants à travers Montréal": [45.5088, -73.5878],
+  "Palais des congrès de Montréal": [45.5064, -73.5595],
+  "Parc Jean-Drapeau": [45.5104, -73.5343],
+  "Église Saint-Jean-Baptiste": [45.5233, -73.5722],
+  "Quartier des spectacles / Place des Festivals": [45.5089, -73.5670],
+  "Quai Jacques-Cartier, Vieux-Port de Montréal (Grand Chapiteau blanc)": [45.5074, -73.5527],
+  "Boulevard Saint-Laurent": [45.5170, -73.5860],
+  "Montréal (centre-ville / Quartier des spectacles)": [45.5089, -73.5670],
+  "Vieux-Port de Montréal – Quai de l'Horloge": [45.5063, -73.5544],
+  "Parc Jean-Drapeau – Espace 67 (Île Sainte-Hélène), Montréal": [45.5104, -73.5343],
+  "Parc Jean-Drapeau (Espace 67, Île Sainte-Hélène)": [45.5104, -73.5343],
+  "Vieux-Port de Montréal": [45.5074, -73.5527],
+};
+
+function jitter(value) {
+  return value + (Math.random() - 0.5) * 0.012;
+}
+
+const raw = fs.readFileSync('data/places.json', 'utf-8');
+const places = JSON.parse(raw);
+
+let missing = new Set();
+const updated = places.map((place) => {
+  const base = coords[place.arrondissement];
+  const [lat, lng] = base || [45.5088, -73.5878];
+  if (!base) missing.add(place.arrondissement);
+  return {
+    ...place,
+    latitude: Number(jitter(lat).toFixed(6)),
+    longitude: Number(jitter(lng).toFixed(6)),
+  };
+});
+
+fs.writeFileSync('data/places.json', JSON.stringify(updated, null, 2), 'utf-8');
+
+console.log(`Added coordinates to ${updated.length} events.`);
+if (missing.size > 0) {
+  console.log('No coordinate match found for:', [...missing]);
+}

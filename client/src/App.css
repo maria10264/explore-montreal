@@ -384,7 +384,7 @@ body::before {
   z-index: 0;        
   isolation: isolate;  
 }
-
+ 
 .map-container .leaflet-container {
   height: 100%;
   width: 100%;
@@ -435,4 +435,89 @@ margin: 0;
   text-align: center;
   margin: 8px 0;
   font-weight: bold;
+}
+
+/* Clear filters button */
+.clear-filters {
+  padding: 0.65rem 1rem;
+  font-size: 0.9rem;
+  background-color: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #b91c1c;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color 0.15s ease;
+}
+
+.clear-filters:hover {
+  background-color: #fecaca;
+}
+
+/* ── Mobile responsiveness ── */
+@media (max-width: 768px) {
+  .navbar h1 {
+    font-size: 1.7rem;
+  }
+
+  .app-content {
+    padding: 1.25rem 1rem;
+  }
+
+  .controls {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .search-bar,
+  .category-filter,
+  .season-filter,
+  .sort-toggle,
+  .clear-filters {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .explore-layout {
+    flex-direction: column;
+  }
+
+  .map-container {
+    width: 100%;
+    height: 280px;
+  }
+
+  .highlights-card {
+    width: 100%;
+    height: auto;
+  }
+
+  .highlight-item img {
+    height: 90px;
+  }
+
+  .place-list {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-content {
+    padding: 1.25rem;
+    max-height: 90vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar h1 {
+    font-size: 1.4rem;
+  }
+
+  .navbar-subtitle {
+    font-size: 0.875rem;
+  }
+
+  .highlight-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

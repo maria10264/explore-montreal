@@ -7,6 +7,8 @@ interface PlaceDetailsProps {
 }
 
 function PlaceDetails({ place, onClose }: PlaceDetailsProps) {
+  const categoryStyle = getCategoryStyle(place.category);
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -15,13 +17,10 @@ function PlaceDetails({ place, onClose }: PlaceDetailsProps) {
         </button>
 
         <span
-            className="place-card-category"
-            style={{
-                color: getCategoryStyle(place.category).color,
-                backgroundColor: getCategoryStyle(place.category).bg,
-            }}
-            >
-            {getCategoryStyle(place.category).icon} {translateCategory(place.category)}
+          className="place-card-category"
+          style={{ color: categoryStyle.color, backgroundColor: categoryStyle.bg }}
+        >
+          {categoryStyle.icon} {translateCategory(place.category)}
         </span>
         <h2>{place.title}</h2>
 

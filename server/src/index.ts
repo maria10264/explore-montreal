@@ -7,21 +7,32 @@ import path from "path";
 dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT ?? 3000;
 
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
+// Load places once at startup rather than on every request
+const placesPath = path.join(__dirname, "../../data/places.json");
+let places: unknown[] = [];
+
+try {
+  const raw = fs.readFileSync(placesPath, "utf-8");
+  places = JSON.parse(raw);
+  console.log(`Loaded ${places.length} places from data/places.json`);
+} catch (err) {
+  console.error("Failed to load places.json:", err);
+  process.exit(1);
+}
+
+app.get("/", (_req, res) => {
   res.send("Explore Montreal API is running 🚀");
 });
 
-app.get("/api/places", (req, res) => {
-  const filePath = path.join(__dirname, "../../data/places.json");
-  const raw = fs.readFileSync(filePath, "utf-8");
-  const places = JSON.parse(raw);
+app.get("/api/places", (_req, res) => {
   res.json(places);
 });
 
-app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });

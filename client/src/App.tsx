@@ -22,8 +22,19 @@ function App() {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
 
+  // Apply seasonal theme to <html> whenever the season filter changes
   useEffect(() => {
-    fetch("http://localhost:3000/api/places")
+    const root = document.documentElement;
+    if (selectedSeason) {
+      root.setAttribute("data-theme", selectedSeason);
+    } else {
+      root.removeAttribute("data-theme");
+    }
+  }, [selectedSeason]);
+
+  useEffect(() => {
+    const apiBase = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
+    fetch(`${apiBase}/api/places`)
       .then((res) => res.json())
       .then((data: Place[]) => {
         setPlaces(data);
@@ -40,25 +51,40 @@ function App() {
   }, [places]);
 
   const filteredPlaces = useMemo(() => {
-    return places.filter((place) => {
-      const matchesSearch = place.title
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
+    return places
+      .filter((place) => {
+        const matchesSearch = place.title
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
 
-      const matchesCategory =
-        selectedCategory === "" || place.category === selectedCategory;
+        const matchesCategory =
+          selectedCategory === "" || place.category === selectedCategory;
 
-      const matchesSeason =
-        selectedSeason === "" ||
-        getSeason(place.first_date) === selectedSeason;
+        const matchesSeason =
+          selectedSeason === "" ||
+          getSeason(place.first_date) === selectedSeason;
 
-      return matchesSearch && matchesCategory && matchesSeason;
-    });
-  }, [places, searchTerm, selectedCategory, selectedSeason]);
+        return matchesSearch && matchesCategory && matchesSeason;
+      })
+      .sort((a, b) =>
+        sortOrder === "asc"
+          ? a.first_date.localeCompare(b.first_date)
+          : b.first_date.localeCompare(a.first_date)
+      );
+  }, [places, searchTerm, selectedCategory, selectedSeason, sortOrder]);
+
+  const hasActiveFilters = searchTerm !== "" || selectedCategory !== "" || selectedSeason !== "";
+
+  function clearFilters() {
+    setSearchTerm("");
+    setSelectedCategory("");
+    setSelectedSeason("");
+    setSortOrder("asc");
+  }
 
   return (
     <div>
-      <Navbar />
+      <Navbar season={selectedSeason} />
 
       {loading && <p className="status-message">Loading Montreal events...</p>}
       {error && <p className="status-message error">{error}</p>}
@@ -86,6 +112,12 @@ function App() {
                 setSortOrder(sortOrder === "asc" ? "desc" : "asc")
               }
             />
+
+            {hasActiveFilters && (
+              <button className="clear-filters" onClick={clearFilters}>
+                ✕ Clear filters
+              </button>
+            )}
           </div>
 
           <p className="results-count">
